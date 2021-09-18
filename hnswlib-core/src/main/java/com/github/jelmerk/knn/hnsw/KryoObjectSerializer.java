@@ -18,6 +18,19 @@ public class KryoObjectSerializer<T> implements ObjectSerializer<T> {
 
     private static final long serialVersionUID = 1L;
 
+    static Kryo kryo = new Kryo();
+    static {
+        kryo.setReferences(true); //默认值就是 true，添加此行的目的是为了提醒维护者，不要改变这个配置
+
+        //不强制要求注册类（注册行为无法保证多个 JVM 内同一个类的注册编号相同；而且业务系统中大量的 Class 也难以一一注册）
+        kryo.setRegistrationRequired(false); //默认值就是 false，添加此行的目的是为了提醒维护者，不要改变这个配置
+
+        //Fix the NPE bug when deserializing Collections.
+        ((Kryo.DefaultInstantiatorStrategy) kryo.getInstantiatorStrategy())
+                .setFallbackInstantiatorStrategy(new StdInstantiatorStrategy());
+        kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
+    }
+
 //    private final ThreadLocal<Kryo> kryoThreadLocal = new ThreadLocal<Kryo>() {
 //        @Override
 //        protected Kryo initialValue() {
@@ -41,16 +54,16 @@ public class KryoObjectSerializer<T> implements ObjectSerializer<T> {
     @Override
     public void write(T item, ObjectOutput out) throws IOException {
         //Kryo kryo = kryoThreadLocal.get();
-        Kryo kryo = new Kryo();
-        kryo.setReferences(true); //默认值就是 true，添加此行的目的是为了提醒维护者，不要改变这个配置
-
-        //不强制要求注册类（注册行为无法保证多个 JVM 内同一个类的注册编号相同；而且业务系统中大量的 Class 也难以一一注册）
-        kryo.setRegistrationRequired(false); //默认值就是 false，添加此行的目的是为了提醒维护者，不要改变这个配置
-
-        //Fix the NPE bug when deserializing Collections.
-        ((Kryo.DefaultInstantiatorStrategy) kryo.getInstantiatorStrategy())
-                .setFallbackInstantiatorStrategy(new StdInstantiatorStrategy());
-        kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
+//        Kryo kryo = new Kryo();
+//        kryo.setReferences(true); //默认值就是 true，添加此行的目的是为了提醒维护者，不要改变这个配置
+//
+//        //不强制要求注册类（注册行为无法保证多个 JVM 内同一个类的注册编号相同；而且业务系统中大量的 Class 也难以一一注册）
+//        kryo.setRegistrationRequired(false); //默认值就是 false，添加此行的目的是为了提醒维护者，不要改变这个配置
+//
+//        //Fix the NPE bug when deserializing Collections.
+//        ((Kryo.DefaultInstantiatorStrategy) kryo.getInstantiatorStrategy())
+//                .setFallbackInstantiatorStrategy(new StdInstantiatorStrategy());
+//        kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new OutputStream() {
             @Override
             public void write(int b) throws IOException {
@@ -66,16 +79,16 @@ public class KryoObjectSerializer<T> implements ObjectSerializer<T> {
     @Override
     public T read(T item,ObjectInput in) throws IOException, ClassNotFoundException {
         //Kryo kryo = kryoThreadLocal.get();
-        Kryo kryo = new Kryo();
-        kryo.setReferences(true); //默认值就是 true，添加此行的目的是为了提醒维护者，不要改变这个配置
-
-        //不强制要求注册类（注册行为无法保证多个 JVM 内同一个类的注册编号相同；而且业务系统中大量的 Class 也难以一一注册）
-        kryo.setRegistrationRequired(false); //默认值就是 false，添加此行的目的是为了提醒维护者，不要改变这个配置
-
-        //Fix the NPE bug when deserializing Collections.
-        ((Kryo.DefaultInstantiatorStrategy) kryo.getInstantiatorStrategy())
-                .setFallbackInstantiatorStrategy(new StdInstantiatorStrategy());
-        kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
+//        Kryo kryo = new Kryo();
+//        kryo.setReferences(true); //默认值就是 true，添加此行的目的是为了提醒维护者，不要改变这个配置
+//
+//        //不强制要求注册类（注册行为无法保证多个 JVM 内同一个类的注册编号相同；而且业务系统中大量的 Class 也难以一一注册）
+//        kryo.setRegistrationRequired(false); //默认值就是 false，添加此行的目的是为了提醒维护者，不要改变这个配置
+//
+//        //Fix the NPE bug when deserializing Collections.
+//        ((Kryo.DefaultInstantiatorStrategy) kryo.getInstantiatorStrategy())
+//                .setFallbackInstantiatorStrategy(new StdInstantiatorStrategy());
+//        kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
         ObjectInputStream objectInputStream = new ObjectInputStream(new InputStream() {
             @Override
             public int read() throws IOException {
