@@ -904,7 +904,7 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
                 connections[i] = readIntArrayList(ois, levelM);
             }
 
-            TItem item = itemSerializer.read((TItem) this.getClass(), ois);
+            TItem item = itemSerializer.read(ois);
 
             boolean deleted = ois.readBoolean();
 
@@ -937,7 +937,7 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
         MutableObjectIntMap<TId> map = new ObjectIntHashMap<>(size);
 
         for (int i = 0; i < size; i++) {
-            TId key = itemIdSerializer.read((TId) this.getClass(), ois);
+            TId key = itemIdSerializer.read(ois);
             int value = ois.readInt();
 
             map.put(key, value);
@@ -955,7 +955,7 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
 
 
         for (int i = 0; i < size; i++) {
-            TId key = itemIdSerializer.read((TId) this.getClass(), ois);
+            TId key = itemIdSerializer.read(ois);
             long value = ois.readLong();
 
             map.put(key, value);
@@ -1351,8 +1351,8 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
          * @return the hnsw index instance
          */
         public <TId, TItem extends Item<TId, TVector>> HnswIndex<TId, TVector, TItem, TDistance> build() {
-            ObjectSerializer<TId> itemIdSerializer = new KryoObjectSerializer<>();
-            ObjectSerializer<TItem> itemSerializer = new KryoObjectSerializer<>();
+            ObjectSerializer<TId> itemIdSerializer = (ObjectSerializer<TId>) new KryoString();
+            ObjectSerializer<TItem> itemSerializer = (ObjectSerializer<TItem>) new KryoTestItem();
 
             return withCustomSerializers(itemIdSerializer, itemSerializer)
                     .build();

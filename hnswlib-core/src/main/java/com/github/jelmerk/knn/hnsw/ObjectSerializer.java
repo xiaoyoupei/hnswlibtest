@@ -29,6 +29,6 @@ public interface ObjectSerializer<T> extends Serializable {
      * @throws IOException in case of an I/O exception
      * @throws ClassNotFoundException in case the value read does not match the type of item
      */
-    T read(T item,ObjectInput in) throws IOException, ClassNotFoundException;
+    T read(ObjectInput in) throws IOException, ClassNotFoundException;
 
 }

@@ -12,7 +12,7 @@ import java.io.*;
  * @date 2021-09-17 09:01
  * @Description：
  */
-public class KryoTestItem  {
+public class KryoTestItem implements ObjectSerializer<TestItem>  {
 
     private static final long serialVersionUID = 1L;
 
@@ -50,11 +50,11 @@ public class KryoTestItem  {
         });
         Output output = new Output(objectOutputStream);
         kryo.writeObject(output, item);
-        output.flush();
+        output.close();
     }
 
 
-    public TestItem read(TestItem item,ObjectInput in) throws IOException, ClassNotFoundException {
+    public TestItem read(ObjectInput in) throws IOException, ClassNotFoundException {
         //Kryo kryo = kryoThreadLocal.get();
 //        Kryo kryo = new Kryo();
 //        kryo.setReferences(true); //默认值就是 true，添加此行的目的是为了提醒维护者，不要改变这个配置

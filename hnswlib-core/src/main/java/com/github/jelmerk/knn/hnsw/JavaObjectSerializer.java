@@ -1,15 +1,18 @@
 package com.github.jelmerk.knn.hnsw;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 /**
+ * 使用java序列化来写值的实现
  * Implementation of {@link ObjectSerializer} that uses java serialization to write the value.
  *
  * @param <T> type of object to serialize
  */
 public class JavaObjectSerializer<T> implements ObjectSerializer<T> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; //序列化的版本号
 
     /**
      * {@inheritDoc}
@@ -24,7 +27,7 @@ public class JavaObjectSerializer<T> implements ObjectSerializer<T> {
      */
     @Override
     @SuppressWarnings("unchecked")
-    public T read(T item,ObjectInput in) throws IOException, ClassNotFoundException {
+    public T read(ObjectInput in) throws IOException, ClassNotFoundException {
         return (T) in.readObject();
     }
 

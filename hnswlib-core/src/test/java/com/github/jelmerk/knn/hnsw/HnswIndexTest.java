@@ -22,8 +22,8 @@ class HnswIndexTest {
     private int efConstruction = 250;
     private int ef = 20;
     private DistanceFunction<float[], Float> distanceFunction = DistanceFunctions.FLOAT_COSINE_DISTANCE;
-    private ObjectSerializer<String> itemIdSerializer = new KryoObjectSerializer<>();
-    private ObjectSerializer<TestItem> itemSerializer = new KryoObjectSerializer<>();
+    private ObjectSerializer<String> itemIdSerializer = new KryoString();
+    private ObjectSerializer<TestItem> itemSerializer = new KryoTestItem();
 
     private TestItem item1 = new TestItem("1", new float[] { 0.0110f, 0.2341f }, 10);
     private TestItem item2 = new TestItem("2", new float[] { 0.2300f, 0.3891f }, 10);

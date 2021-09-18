@@ -6,13 +6,15 @@ import com.esotericsoftware.kryo.io.Output;
 import org.objenesis.strategy.StdInstantiatorStrategy;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author xiaoyoupei
  * @date 2021-09-17 09:01
  * @Description：
  */
-public class KryoString  {
+public class KryoString  implements ObjectSerializer<String> {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,11 +51,11 @@ public class KryoString  {
         });
         Output output = new Output(objectOutputStream);
         kryo.writeObject(output, item);
-        output.flush();
+        output.close();
     }
 
 
-    public String read(Class<? extends HnswIndex> item, ObjectInput in) throws IOException {
+    public String read(ObjectInput in) throws IOException {
         //Kryo kryo = kryoThreadLocal.get();
 //        Kryo kryo = new Kryo();
 //        kryo.setReferences(true); //默认值就是 true，添加此行的目的是为了提醒维护者，不要改变这个配置
@@ -72,6 +74,41 @@ public class KryoString  {
             }
         });
         Input input = new Input(objectInputStream);
-        return  kryo.readObject(input, String.class);
+        return  kryo.readObject(input,String.class);
     }
+
+//    public static void main(String[] args) throws IOException, ClassNotFoundException {
+//
+//        /**
+//         * java序列化String
+//         */
+////        String string = "znv666";
+////        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("F:\\\\ZNV\\\\test.txt"));
+////        oos.writeObject(string);
+//
+////        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("F:\\\\ZNV\\\\test.txt"));
+////        String o = (String)ois.readObject();
+////        System.out.println(o);
+//
+//        /**
+//         * kryo序列化String
+//         */
+//        Kryo kryo = new Kryo();
+//        kryo.setReferences(true);
+//        kryo.setRegistrationRequired(false);
+//        ((Kryo.DefaultInstantiatorStrategy) kryo.getInstantiatorStrategy())
+//                .setFallbackInstantiatorStrategy(new StdInstantiatorStrategy());
+//        String string = "znv666";
+//        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("F:\\ZNV\\test.txt"));
+//        Output output = new Output(oos);
+//        kryo.writeObject(output,string);
+//        output.close();
+//
+//
+//        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("F:\\ZNV\\test.txt"));
+//        Input input = new Input(ois);
+//        String o = kryo.readObject(input, String.class);
+//        System.out.println(o);
+//
+//    }
 }

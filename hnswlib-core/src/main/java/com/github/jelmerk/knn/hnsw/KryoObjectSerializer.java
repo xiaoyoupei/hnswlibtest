@@ -77,6 +77,11 @@ public class KryoObjectSerializer<T> implements ObjectSerializer<T> {
     }
 
     @Override
+    public T read(ObjectInput in) throws IOException, ClassNotFoundException {
+        return null;
+    }
+
+
     public T read(T item,ObjectInput in) throws IOException, ClassNotFoundException {
         //Kryo kryo = kryoThreadLocal.get();
 //        Kryo kryo = new Kryo();
