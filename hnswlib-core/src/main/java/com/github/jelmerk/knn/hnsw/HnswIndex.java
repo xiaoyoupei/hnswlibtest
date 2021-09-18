@@ -1352,7 +1352,7 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
          */
         public <TId, TItem extends Item<TId, TVector>> HnswIndex<TId, TVector, TItem, TDistance> build() {
             ObjectSerializer<TId> itemIdSerializer = (ObjectSerializer<TId>) new KryoString();
-            ObjectSerializer<TItem> itemSerializer = (ObjectSerializer<TItem>) new KryoTestItem();
+            ObjectSerializer<TItem> itemSerializer = (ObjectSerializer<TItem>) new KryoDataItem();
 
             return withCustomSerializers(itemIdSerializer, itemSerializer)
                     .build();
