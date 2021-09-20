@@ -1,4 +1,4 @@
-package com.github.jelmerk.knn.bean;
+package com.github.jelmerk.knn.hnsw;
 
 /**
  * Created by ZNV on 2019/10/11.

@@ -3,7 +3,6 @@ package com.github.jelmerk.knn.hnsw;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
-import com.github.jelmerk.knn.bean.DataItem;
 import org.objenesis.strategy.StdInstantiatorStrategy;
 
 import java.io.*;
