@@ -17,7 +17,7 @@ public class KryoDataItem implements ObjectSerializer<DataItem> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * ThreadLocal来维护以保证其线程安全
+     * ThreadLocal牺牲空间来换取并发线程安全
      */
     private static final ThreadLocal<Kryo> kryos = new ThreadLocal<Kryo>() {
         protected Kryo initialValue() {
