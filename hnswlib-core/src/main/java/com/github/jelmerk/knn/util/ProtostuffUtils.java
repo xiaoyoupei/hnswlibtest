@@ -1,10 +1,12 @@
 package com.github.jelmerk.knn.util;
 
+import com.github.jelmerk.knn.hnsw.DataItem;
 import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtostuffIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
 
+import javax.xml.crypto.Data;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +23,7 @@ public class ProtostuffUtils {
     private static LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
     /**
      * 缓存Schema
+     *
      */
     private static Map<Class<?>, Schema<?>> schemaCache = new ConcurrentHashMap<>();
 
@@ -73,5 +76,13 @@ public class ProtostuffUtils {
         }
 
         return schema;
+    }
+
+    public static void main(String[] args){
+        DataItem dataItem =new DataItem("1", new byte[] { 11,22 }, 10);
+        byte[] serialize = serialize(dataItem);
+        DataItem deserialize = deserialize(serialize, DataItem.class);
+        System.out.println(deserialize.toString());
+
     }
 }

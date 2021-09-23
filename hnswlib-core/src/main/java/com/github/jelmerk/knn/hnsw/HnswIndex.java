@@ -1351,8 +1351,8 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
          * @return the hnsw index instance
          */
         public <TId, TItem extends Item<TId, TVector>> HnswIndex<TId, TVector, TItem, TDistance> build() {
-            ObjectSerializer<TId> itemIdSerializer = (ObjectSerializer<TId>) new KryoString();
-            ObjectSerializer<TItem> itemSerializer = (ObjectSerializer<TItem>) new KryoDataItem();
+            ObjectSerializer<TId> itemIdSerializer = (ObjectSerializer<TId>) new ProtostuffString();
+            ObjectSerializer<TItem> itemSerializer = (ObjectSerializer<TItem>) new ProtostuffDataItem();
 
             return withCustomSerializers(itemIdSerializer, itemSerializer)
                     .build();
