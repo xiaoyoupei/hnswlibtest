@@ -24,13 +24,15 @@ public class KryoDataItem implements ObjectSerializer<DataItem> {
         protected Kryo initialValue() {
             Kryo kryo = new Kryo();
 
-            kryo.setReferences(true); ////支持循环引用，默认值就是 true
+            kryo.setReferences(false); ////支持循环引用，默认值就是 true
 
-            kryo.setRegistrationRequired(false); //关闭注册行为，默认值就是 false
+            kryo.setRegistrationRequired(true); //关闭注册行为，默认值就是 false
+            kryo.register(com.github.jelmerk.knn.hnsw.DataItem.class);
+            kryo.register(byte[].class);
 
             //Fix the NPE bug when deserializing Collections.
             ((Kryo.DefaultInstantiatorStrategy) kryo.getInstantiatorStrategy()).setFallbackInstantiatorStrategy(new StdInstantiatorStrategy());
-            kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
+            //kryo.setInstantiatorStrategy(new StdInstantiatorStrategy());
             return kryo;
         }
     };
