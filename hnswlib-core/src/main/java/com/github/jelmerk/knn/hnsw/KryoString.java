@@ -14,7 +14,7 @@ import java.util.Map;
  * @date 2021-09-17 09:01
  * @Description：
  */
-public class KryoString  implements ObjectSerializer<String> {
+public class KryoString implements ObjectSerializer<String> {
 
     private static final long serialVersionUID = 1L;
 
@@ -59,6 +59,6 @@ public class KryoString  implements ObjectSerializer<String> {
             }
         });
         Input input = new Input(objectInputStream);
-        return  kryo.readObject(input,String.class);
+        return kryo.readObject(input, String.class);
     }
 }

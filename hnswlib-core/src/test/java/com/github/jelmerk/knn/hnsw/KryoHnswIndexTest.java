@@ -8,9 +8,7 @@ import com.github.jelmerk.knn.hnsw.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -193,10 +191,17 @@ class KryoHnswIndexTest {
         ByteArrayOutputStream in = new ByteArrayOutputStream();
 
         index.add(item1);
+        File file = new File("F:/ZNV/test1.bin");
+        if (file.exists()) {
+            file.delete();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
+        //index.save(in);
+        index.save(fileOutputStream);
+        HnswIndex<String, float[], com.github.jelmerk.knn.TestItem, Float> loadedIndex = HnswIndex.load(new FileInputStream(file));
 
-        index.save(in);
 
-        HnswIndex<String, byte[], DataItem, Float> loadedIndex = HnswIndex.load(new ByteArrayInputStream(in.toByteArray()));
+        //HnswIndex<String, byte[], DataItem, Float> loadedIndex = HnswIndex.load(new ByteArrayInputStream(in.toByteArray()));
         assertThat(loadedIndex.size(), is(1));
     }
 }
