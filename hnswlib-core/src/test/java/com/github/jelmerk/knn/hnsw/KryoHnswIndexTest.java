@@ -28,8 +28,8 @@ class KryoHnswIndexTest {
     private int efConstruction = 250;
     private int ef = 20;
     private DistanceFunction<byte[], Float> distanceFunction = DistanceFunctions.BYTE_COMP;
-    private ObjectSerializer<String> itemIdSerializer = new ProtostuffString();
-    private ObjectSerializer<DataItem> itemSerializer = new ProtostuffDataItem();
+    private ObjectSerializer<String> itemIdSerializer = new KryoString();
+    private ObjectSerializer<DataItem> itemSerializer = new KryoDataItem();
 
     private DataItem item1 = new DataItem("1", new byte[] { 11,22 }, 10);
     private DataItem item2 = new DataItem("2", new byte[] { 33,44 }, 10);
