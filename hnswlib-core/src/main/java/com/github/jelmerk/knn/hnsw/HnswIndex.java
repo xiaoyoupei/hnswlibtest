@@ -4,6 +4,7 @@ package com.github.jelmerk.knn.hnsw;
 import com.github.jelmerk.knn.*;
 import com.github.jelmerk.knn.util.*;
 import com.github.jelmerk.knn.util.BitSet;
+import org.apache.commons.lang.time.StopWatch;
 import org.codehaus.jettison.json.JSONObject;
 import org.eclipse.collections.api.list.primitive.MutableIntList;
 import org.eclipse.collections.api.map.primitive.MutableObjectIntMap;
@@ -801,6 +802,8 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
     }
 
     private void writeNode(ObjectOutputStream oos, Node<TItem> node) throws IOException {
+
+
         if (node == null) {
             oos.writeInt(-1);
         } else {
@@ -814,7 +817,6 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
                 }
             }
             itemSerializer.write(node.item, oos);
-
             oos.writeBoolean(node.deleted);
         }
     }
@@ -904,7 +906,6 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
                 int levelM = i == 0 ? maxM0 : maxM;
                 connections[i] = readIntArrayList(ois, levelM);
             }
-
             TItem item = itemSerializer.read(ois);
 
             boolean deleted = ois.readBoolean();

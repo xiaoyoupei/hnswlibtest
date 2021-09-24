@@ -39,7 +39,6 @@ public class KryoStringNew implements ObjectSerializerNew<String> {
         Output output = new Output(out);
         kryo.writeObject(output, item);
 
-        output.flush();
         output.close();
         out.close();
 
