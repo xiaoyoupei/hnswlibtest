@@ -53,7 +53,7 @@ public class KryoDataItem implements ObjectSerializer<DataItem> {
 //    }
 
     /**
-     * kryo写序列化
+     * kryo序列化
      *
      * @param item the item to write
      * @param out  the ObjectOutput implementation to write to
@@ -73,7 +73,7 @@ public class KryoDataItem implements ObjectSerializer<DataItem> {
     }
 
     /**
-     * kryo读序列化
+     * kryo反序列化
      *
      * @param in the ObjectInput implementation to read from
      * @return 返回读的对象
