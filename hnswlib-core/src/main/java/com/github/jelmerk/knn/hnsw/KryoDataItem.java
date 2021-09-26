@@ -3,6 +3,7 @@ package com.github.jelmerk.knn.hnsw;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.esotericsoftware.minlog.Log;
 import org.objenesis.strategy.StdInstantiatorStrategy;
 
 import java.io.*;
@@ -61,15 +62,17 @@ public class KryoDataItem implements ObjectSerializer<DataItem> {
      */
     public void write(DataItem item, ObjectOutput out) throws IOException {
         Kryo kryo = kryos.get();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new OutputStream() {
-            @Override
-            public void write(int b) throws IOException {
-                out.write(b);
-            }
-        });
-        Output output = new Output(objectOutputStream);
+//        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new OutputStream() {
+//            @Override
+//            public void write(int b) throws IOException {
+//                out.write(b);
+//            }
+//        });
+        Output output = new Output((OutputStream) out);
         kryo.writeObject(output, item);
-        output.close();
+        output.flush();
+        //Log.TRACE();
+
     }
 
     /**
@@ -81,13 +84,14 @@ public class KryoDataItem implements ObjectSerializer<DataItem> {
      */
     public DataItem read(ObjectInput in) throws IOException {
         Kryo kryo = kryos.get();
-        ObjectInputStream objectInputStream = new ObjectInputStream(new InputStream() {
-            @Override
-            public int read() throws IOException {
-                return in.read();
-            }
-        });
-        Input input = new Input(objectInputStream);
+//        ObjectInputStream objectInputStream = new ObjectInputStream(new InputStream() {
+//            @Override
+//            public int read() throws IOException {
+//                return in.read();
+//            }
+//        });
+        Input input = new Input((InputStream) in);
+        //Log.TRACE();
         return kryo.readObject(input, DataItem.class);
     }
 }

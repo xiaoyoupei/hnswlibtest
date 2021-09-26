@@ -781,7 +781,8 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
 
         for (ObjectIntPair<TId> pair : map.keyValuesView()) {
             itemIdSerializer.write(pair.getOne(), oos);
-            oos.writeInt(pair.getTwo());
+            oos.writeObject(pair.getTwo());
+            //oos.writeInt(pair.getTwo());
         }
     }
 
@@ -817,7 +818,9 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
                 }
             }
             itemSerializer.write(node.item, oos);
-            oos.writeBoolean(node.deleted);
+
+            oos.writeObject(node.deleted);
+            //oos.writeBoolean(node.deleted);
         }
     }
 
@@ -908,8 +911,8 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
             }
             TItem item = itemSerializer.read(ois);
 
-            boolean deleted = ois.readBoolean();
-
+            boolean deleted = (boolean)ois.readObject();
+            //boolean deleted = ois.readBoolean();
             return new Node<>(id, connections, item, deleted);
         }
     }
@@ -940,7 +943,9 @@ public class HnswIndex<TId, TVector, TItem extends Item<TId, TVector>, TDistance
 
         for (int i = 0; i < size; i++) {
             TId key = itemIdSerializer.read(ois);
-            int value = ois.readInt();
+
+            int value = (int) ois.readObject();
+            //int value = ois.readInt();
 
             map.put(key, value);
         }
