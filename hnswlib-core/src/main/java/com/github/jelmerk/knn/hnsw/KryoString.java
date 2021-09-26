@@ -39,12 +39,6 @@ public class KryoString implements ObjectSerializer<String> {
 
     public void write(String item, ObjectOutput out) throws IOException {
         Kryo kryo = kryos.get();
-//        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new OutputStream() {
-//            @Override
-//            public void write(int b) throws IOException {
-//                out.write(b);
-//            }
-//        });
         Output output = new Output((OutputStream) out);
         kryo.writeObject(output, item);
         output.flush();
@@ -55,12 +49,6 @@ public class KryoString implements ObjectSerializer<String> {
 
     public String read(ObjectInput in) throws IOException {
         Kryo kryo = kryos.get();
-//        ObjectInputStream objectInputStream = new ObjectInputStream(new InputStream() {
-//            @Override
-//            public int read() throws IOException {
-//                return in.read();
-//            }
-//        });
         Input input = new Input((InputStream) in);
         //Log.TRACE();
         return kryo.readObject(input, String.class);
